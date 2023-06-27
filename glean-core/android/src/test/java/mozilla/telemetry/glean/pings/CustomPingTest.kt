@@ -77,6 +77,7 @@ class CustomPingTest {
             name = "custom-ping",
             includeClientId = true,
             sendIfEmpty = true,
+            preciseTimestamps = true,
             reasonCodes = emptyList(),
         )
 
@@ -105,6 +106,7 @@ class CustomPingTest {
             name = "custom-ping",
             includeClientId = true,
             sendIfEmpty = true,
+            preciseTimestamps = true,
             reasonCodes = emptyList(),
         )
 
@@ -177,6 +179,7 @@ class CustomPingTest {
             name = pingName,
             includeClientId = true,
             sendIfEmpty = false,
+            preciseTimestamps = true,
             reasonCodes = emptyList(),
         )
 

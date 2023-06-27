@@ -2,6 +2,10 @@
 
 [Full changelog](https://github.com/mozilla/glean/compare/v54.0.0...main)
 
+* General
+  * Extend start/stop time of a ping to millisecond precision. Custom pings can opt-out using `precise_timestamps: false` ([#2456](https://github.com/mozilla/glean/pull/2456))
+  * Update `glean_parser` to v9.0.0 ([release notes](https://github.com/mozilla/glean_parser/releases/tag/v9.0.0))
+
 # v54.0.0 (2023-09-12)
 
 [Full changelog](https://github.com/mozilla/glean/compare/v53.2.0...v54.0.0)

@@ -13,7 +13,7 @@ fn set_up_basic_ping() -> (Glean, PingMaker, PingType, tempfile::TempDir) {
     let (tempdir, _) = tempdir();
     let (mut glean, t) = new_glean(Some(tempdir));
     let ping_maker = PingMaker::new();
-    let ping_type = PingType::new("store1", true, false, vec![]);
+    let ping_type = PingType::new("store1", true, false, true, vec![]);
     glean.register_ping_type(&ping_type);
 
     // Record something, so the ping will have data
@@ -82,7 +82,7 @@ fn collect_must_report_none_when_no_data_is_stored() {
 
     let (mut glean, ping_maker, ping_type, _t) = set_up_basic_ping();
 
-    let unknown_ping_type = PingType::new("unknown", true, false, vec![]);
+    let unknown_ping_type = PingType::new("unknown", true, false, true, vec![]);
     glean.register_ping_type(&ping_type);
 
     assert!(ping_maker
@@ -106,7 +106,7 @@ fn seq_number_must_be_sequential() {
 
     for i in 0..=1 {
         for ping_name in ["store1", "store2"].iter() {
-            let ping_type = PingType::new(*ping_name, true, false, vec![]);
+            let ping_type = PingType::new(*ping_name, true, false, true, vec![]);
             let ping = ping_maker
                 .collect(&glean, &ping_type, None, "", "")
                 .unwrap();
@@ -119,7 +119,7 @@ fn seq_number_must_be_sequential() {
 
     // Test that ping sequence numbers increase independently.
     {
-        let ping_type = PingType::new("store1", true, false, vec![]);
+        let ping_type = PingType::new("store1", true, false, true, vec![]);
 
         // 3rd ping of store1
         let ping = ping_maker
@@ -137,7 +137,7 @@ fn seq_number_must_be_sequential() {
     }
 
     {
-        let ping_type = PingType::new("store2", true, false, vec![]);
+        let ping_type = PingType::new("store2", true, false, true, vec![]);
 
         // 3rd ping of store2
         let ping = ping_maker
@@ -148,7 +148,7 @@ fn seq_number_must_be_sequential() {
     }
 
     {
-        let ping_type = PingType::new("store1", true, false, vec![]);
+        let ping_type = PingType::new("store1", true, false, true, vec![]);
 
         // 5th ping of store1
         let ping = ping_maker
@@ -163,7 +163,7 @@ fn seq_number_must_be_sequential() {
 fn clear_pending_pings() {
     let (mut glean, _t) = new_glean(None);
     let ping_maker = PingMaker::new();
-    let ping_type = PingType::new("store1", true, false, vec![]);
+    let ping_type = PingType::new("store1", true, false, true, vec![]);
     glean.register_ping_type(&ping_type);
 
     // Record something, so the ping will have data
@@ -191,7 +191,7 @@ fn no_pings_submitted_if_upload_disabled() {
     // Regression test, bug 1603571
 
     let (mut glean, _t) = new_glean(None);
-    let ping_type = PingType::new("store1", true, true, vec![]);
+    let ping_type = PingType::new("store1", true, true, true, vec![]);
     glean.register_ping_type(&ping_type);
 
     assert!(ping_type.submit_sync(&glean, None));
@@ -209,7 +209,7 @@ fn no_pings_submitted_if_upload_disabled() {
 fn metadata_is_correctly_added_when_necessary() {
     let (mut glean, _t) = new_glean(None);
     glean.set_debug_view_tag("valid-tag");
-    let ping_type = PingType::new("store1", true, true, vec![]);
+    let ping_type = PingType::new("store1", true, true, true, vec![]);
     glean.register_ping_type(&ping_type);
 
     assert!(ping_type.submit_sync(&glean, None));

@@ -117,7 +117,7 @@ where
 ///     enable_event_timestamps: false,
 /// };
 /// let mut glean = Glean::new(cfg).unwrap();
-/// let ping = PingType::new("sample", true, false, vec![]);
+/// let ping = PingType::new("sample", true, false, true, vec![]);
 /// glean.register_ping_type(&ping);
 ///
 /// let call_counter: CounterMetric = CounterMetric::new(CommonMetricData {
